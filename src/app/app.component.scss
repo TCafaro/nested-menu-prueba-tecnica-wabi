@@ -1,0 +1,31 @@
+$primary-color: rgb(24, 24, 66);
+
+header {
+  width: 100%;
+  background-color: $primary-color;
+  padding: 50px 0;
+
+  h1,
+  h2,
+  i {
+    color: white;
+  }
+}
+
+section,
+.title-container {
+  padding: 20px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.title-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.nested-menu-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

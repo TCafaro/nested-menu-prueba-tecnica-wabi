@@ -1,0 +1,52 @@
+<div class="menu-container" (mouseleave)="closeMenu()">
+  <button
+    class="menu-container__menu-trigger"
+    (click)="triggerMenu()"
+    [class.menu-container__menu-trigger--triggered]="menuIsOpen"
+  >
+    <span class="material-symbols-outlined"> more_vert </span> Wabi Productos
+  </button>
+
+  <ul
+    class="menu-container__menu-item-container"
+    *ngIf="menuIsOpen"
+    (mouseenter)="clearClosingTimeout()"
+  >
+    <ng-container
+      *ngTemplateOutlet="recursiveMenuItems; context: { list: menuItems }"
+    ></ng-container>
+  </ul>
+</div>
+
+<ng-template #recursiveMenuItems let-list="list">
+  <li
+    class="menu-container__menu-item-container__menu-item"
+    *ngFor="let item of list"
+    (mouseenter)="expandItem(item)"
+    (mouseleave)="contractItem(item)"
+    (click)="$event.stopPropagation(); onItemClick(item); triggerItem(item)"
+  >
+    {{ item.name }}
+    <span
+      class="material-symbols-outlined"
+      *ngIf="item.children.length && !item.expanded"
+    >
+      keyboard_arrow_right
+    </span>
+    <span
+      class="material-symbols-outlined"
+      *ngIf="item.children.length && item.expanded"
+    >
+      keyboard_arrow_down
+    </span>
+
+    <ul
+      class="menu-container__menu-item-container"
+      *ngIf="menuIsOpen && item.expanded && item.children.length > 0"
+    >
+      <ng-container
+        *ngTemplateOutlet="recursiveMenuItems; context: { list: item.children }"
+      ></ng-container>
+    </ul>
+  </li>
+</ng-template>
